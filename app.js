@@ -13,13 +13,20 @@ mongoose.set('strictQuery',true);
 //mongoose.connect("mongodb://127.0.0.1:27017/Journal",{useNewUrlParser:true},{serverSelectionTimeoutMS: 30000});
 
 mongoose.connect("mongodb+srv://8228935781r:Ritu22@cluster0.sx4jmg4.mongodb.net/Journal",{useNewUrlParser:true},{serverSelectionTimeoutMS: 30000});
+mongoose.connect("mongodb+srv://8228935781r:Ritu22@cluster0.sx4jmg4.mongodb.net/Users",{useNewUrlParser:true},{serverSelectionTimeoutMS: 30000});
 
 const JournalSchema=new mongoose.Schema({
   Title:String,
   Text:String
 });
 
+const UserSchema=new mongoose.Schema({
+  email_address:String,
+  password:String
+});
+
 const Journal=mongoose.model("Journal",JournalSchema);
+const User=mongoose.model("User",UserSchema);
 
 // const Journal=new JournalModel({
 //    title:req.body.Title,
@@ -261,6 +268,13 @@ app.post("/SignInOriginal",function(req,res)
   var firstName=req.body.fename;
   var Password=req.body.password;
 
+
+  const U=new User({
+    email_address:firstName,
+    password:Password
+  });
+  
+  U.save();
   // console.log(firstName);
   // console.log(Password);
 });
