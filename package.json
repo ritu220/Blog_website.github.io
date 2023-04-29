@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "@mailchimp/mailchimp_marketing": "^3.0.80",
+    "bcrypt": "^5.1.0",
     "body-parser": "^1.18.3",
     "ejs": "^3.1.8",
     "express": "^4.16.3",

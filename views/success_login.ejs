@@ -1,0 +1,77 @@
+<%- include('partials/header'); -%>
+
+<h1 class="display-3 secret-text"style="font-size:33px" >Congratulations! You have registered successfully.</h1>
+
+  <section id="top">
+    <div class="container-fluid">
+      <!-- Title -->
+      <div class="row" class="upperdiv">
+        <div class="col-lg-6">
+          <div class="textBIG" style="font-family:Arial-Black;line-height: 3.5;">
+            <h1>"Blogging is the new poetry." </h1>
+          </div>
+          <div>
+            <br>
+            <br>
+            <br>
+            <button type="button" id="Loginbtn" class="btn btn-dark btn-lg" download-button><i class="fa fa-apple"
+                aria-hidden="true"></i> LOGIN</button>
+            <button type="button" id="Signinbtn" class="btn btn-btn-light btn-lg" download-button><i
+                class="fab fa-google-play"></i> SIGNUP</button>
+          </div>
+
+        </div>
+
+
+
+
+        <div class="row row-container" class="imgrow">
+          <div>
+            <img class="title-image" src="images/BloImage.avif" alt="Blog_image">
+          </div>
+          <!-- <div>
+            <button type="button" class="btn btn-success btn-rounded" id="mybtn"
+              style="margin-top: 50px; margin-bottom: 50px; background-color: #1abc9c;">Post Your Journals</button>
+          </div> -->
+        </div>
+
+
+  </section>
+
+  
+
+  <script>
+    document.getElementById("mybtn").addEventListener("click", function () {
+      window.location.href = "/compose";
+    });
+  </script>
+  <script>
+    document.getElementById("Loginbtn").addEventListener("click", function () {
+      window.location.href = "/LogIn";
+    });
+  </script>
+  <script>
+    document.getElementById("Signinbtn").addEventListener("click", function () {
+      window.location.href = "/SignInOriginal";
+    });
+  </script>
+
+  <!-- <p><%= HomeContent %></p>  -->
+
+
+
+  <!-- <% console.log(posts); %> -->
+
+  <!-- <% for(var i=0;i<posts.length;i++) { %>
+    <%   console.log(posts[i].Title); } %> -->
+
+  <!-- <% posts.forEach(function(element) {  %>
+    <%     console.log(element.Title);   })  %> -->
+
+  <!-- <% posts.forEach(function(el) {  %>
+        <h1> <%=  el.Title  %> </h1>
+        <p>  <%= el.Text.substring(0,100) + "...." %> <a href="/posts/<%=el.Title%>">ReadMore</a></p>
+        <% }) %> -->
+
+
+  <%- include('partials/footer'); -%>
