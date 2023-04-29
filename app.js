@@ -274,17 +274,12 @@ app.post("/SignInOriginal",function(req,res)
     password:Password
   });
   
-  U.save(function(err)
-  {
-    if(err)
-    {
-      console.log(err);
-    }
-    else
-    {
-      
-      res.render("Success_Signup");
-    }
+  U.save()
+  .then((result) => {
+    res.render("Success_Signup");
+  })
+  .catch((error) => {
+    console.error('Error creating user:', error);
   });
   // console.log(firstName);
   // console.log(Password);
