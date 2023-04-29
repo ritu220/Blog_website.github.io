@@ -10,7 +10,9 @@ const https=require("https"); //for sending the data of the form to the mailchim
 //for database
 const mongoose= require("mongoose");
 mongoose.set('strictQuery',true);
-mongoose.connect("mongodb://127.0.0.1:27017/Journal",{useNewUrlParser:true},{serverSelectionTimeoutMS: 30000});
+//mongoose.connect("mongodb://127.0.0.1:27017/Journal",{useNewUrlParser:true},{serverSelectionTimeoutMS: 30000});
+
+mongoose.connect("mongodb+srv://8228935781r:Ritu22@cluster0.sx4jmg4.mongodb.net/Journal",{useNewUrlParser:true},{serverSelectionTimeoutMS: 30000});
 
 const JournalSchema=new mongoose.Schema({
   Title:String,
@@ -264,7 +266,7 @@ app.post("/SignInOriginal",function(req,res)
 });
 
 
-app.listen(3000, function() {
+app.listen(process.env.PORT || 3000, function() {
   console.log("Server started on port 3000");
 });
 
