@@ -14,7 +14,7 @@ mongoose.set('strictQuery',true);
 
 mongoose.connect("mongodb+srv://8228935781r:Ritu22@cluster0.sx4jmg4.mongodb.net/Journal",{useNewUrlParser:true},{serverSelectionTimeoutMS: 30000});
 
-
+const val=0;
 const JournalSchema=new mongoose.Schema({
   Title:String,
   Text:String
@@ -274,7 +274,18 @@ app.post("/SignInOriginal",function(req,res)
     password:Password
   });
   
-  U.save();
+  U.save(function(err)
+  {
+    if(err)
+    {
+      console.log(err);
+    }
+    else
+    {
+      
+      res.render("Success_Signup");
+    }
+  });
   // console.log(firstName);
   // console.log(Password);
 });
