@@ -1,0 +1,11 @@
+.TITLE
+{
+    height:40px;
+    border-radius: 5px;
+    background: #8ae9d6;
+    padding-left: 5px;
+}
+
+#top{
+    background-image: url("fg.jpg");
+}

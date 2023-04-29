@@ -1,0 +1,79 @@
+<%- include('partials/header'); -%>
+
+ 
+
+      <section id="top">
+         <div class="container-fluid">
+          <!-- Title -->
+          <div class="row" class="upperdiv">
+            <div class="col-lg-6">
+              <div class="textBIG" style="font-family:Arial-Black;line-height: 3.5;">
+                <h1>"Explore the Latest Insights and Ideas: Check Out Our Blog"</h1>
+               
+              </div>
+              <div>
+                <br>
+                <br>
+                <br>
+                <button type="button" id="mybtn" id="Loginbtn" class="btn btn-dark btn-lg"  download-button><i class="fa fa-apple"
+                    aria-hidden="true"></i> Post Your Journals</button>
+               
+              </div>
+    
+            </div>
+    
+    
+    
+    
+            <div class="row row-container" class="imgrow">
+              <div>
+                <!-- <img class="title-image" src="images/BloImage.avif" alt="Blog_image"> -->
+              </div>
+              <!-- <div>
+                <button type="button" class="btn btn-success btn-rounded" id="mybtn"
+                  style="margin-top: 50px; margin-bottom: 50px; background-color: #1abc9c;">Post Your Journals</button>
+              </div> -->
+            </div>
+     
+    
+      </section>
+
+
+
+
+<% for(var i=posts.length-1;i>=0;i--) {  %>
+   
+
+    <div class="TITLE">
+        <h1> <%=  posts[i].Title  %> </h1>
+        
+    </div>
+
+    <div class="dateTime">
+        <div class="date" id="date">
+            <h1> <%=  posts[i].date  %> </h1>
+        </div>
+    </div>
+
+    <div class="POST">
+
+        <p>  <%= posts[i].Text %> </p>
+
+    </div>
+
+    <br>
+    <br>
+   
+
+    <% } %>
+
+
+
+    <script>
+        document.getElementById("mybtn").addEventListener("click", function () {
+          window.location.href = "/compose";
+        });
+    </script>
+    
+
+<%- include('partials/footer'); -%>
