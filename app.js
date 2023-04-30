@@ -248,53 +248,40 @@ app.get("/LogIn",function(req,res)
 });
 
 
-// app.post("/LogIn",function(req,res)
-// {
-//     var firstName=req.body.fname;
-//     var LastName=req.body.lname;
+app.post("/LogIn",function(req,res)
+{
+    var firstName=req.body.fname;
+    var LastName=req.body.lname;
     
-//     User.findOne({email_address:firstName},function(err,foundUser)
-//     {
-      
-//         if(foundUser)
-//         {
-//           if(foundUser.password===LastName)
-//           {
-//             res.render("success_login");
-//           }
+    User.findOne({email_address:firstName},function(err,foundUser)
+    {
+         if(err)
+         {
+          console.log(err);
+         }
+         else
+         {
+          if(foundUser)
+        {
+          if(foundUser.password===LastName)
+          {
+            res.render("success_login");
+          }
+        }
+         }
         
-//       }
-//     })
-//     // console.log(firstName);
-//     // console.log(LastName);
-// });
-
-const User = require('./models/User');
-const bcrypt = require('bcrypt');
-
-app.post('/LogIn', async (req, res) => {
-  const email=req.body.fname;
-  const password= req.body.lname;
-
-  try {
-    const user = await User.findOne({ email });
-
-    if (!user) {
-      return res.status(401).send('Invalid email or password');
-    }
-
-    const match = await bcrypt.compare(password, user.password);
-
-    if (!match) {
-      return res.status(401).send('Invalid email or password');
-    }
-
-    res.render('success_login');
-  } catch (error) {
-    console.log(error);
-    res.status(500).send('Server error');
-  }
+    });
+    // console.log(firstName);
+    // console.log(LastName);
 });
+
+
+// app.post('/LogIn', async (req, res) => {
+//   const email=req.body.fname;
+//   const password= req.body.lname;
+
+  
+// });
 
 
 app.get("/SignInOriginal",function(req,res)
