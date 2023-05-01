@@ -14,6 +14,6 @@ I have created a databse for it which i can access in my local computer which wo
 
 5. a message will be displayed on your terminal that it has started running on the local host 3000.
 
-6. now go on your browser and type http://localhost:3000/  and hoit enter.
+6. now go on your browser and type http://localhost:3000/  and hit enter.
 
 7. now you can use the website and post as much journal as much you want.
