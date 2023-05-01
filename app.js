@@ -235,55 +235,61 @@ app.post("/SignIn",function(req,res)  //jab koi subscribe wale button pe click k
 
   //--------without using mailchimp---------
 
-  const N=new Newsletter({
-    email_address:Email,
-    password:Password
+  const N = new Newsletter({
+    email_address: Email,
+    password: Password
   });
   
   N.save()
-  .then((result) => {
-    res.render("success_newsletter");
-  })
-  .catch((error) => {
-    console.error('Error creating user:', error);
-  });
-
+    .then((result) => {
+      res.render("success_newsletter");
+    })
+    .catch((error) => {
+      console.error('Error creating user:', error);
+    });
+  
   //sending emails
- 
-// create a nodemailer transporter
-const transporter = nodemailer.createTransport({
-  host: 'smtp.ethereal.email',
-  port: 587,
-  auth: {
-      user: 'matt12@ethereal.email',
-      pass: 'zUnCKcZQyeQgbGYtZT'
-  }
-});
-
-// retrieve email addresses from database
-const emails = User.get('SELECT email_address FROM users');
-
-// loop through each email and send email
-emails.forEach(email => {
-  const mailOptions = {
-    from: '8228935781r@gmail.com',
-    to: email_address,
-    subject: 'Hello freinds namaste .',
-    text: 'kya re kaisan baa'
-  };
-
-  transporter.sendMail(mailOptions, function(error, info){
-    if (error) {
-      console.log(error);
-    } else {
-      console.log('Email sent: ' + info.response);
+  
+  // create a nodemailer transporter
+  const transporter = nodemailer.createTransport({
+    host: 'smtp.ethereal.email',
+    port: 587,
+    auth: {
+        user: 'matt12@ethereal.email',
+        pass: 'zUnCKcZQyeQgbGYtZT'
     }
   });
-});
-
-
+  
+  // retrieve email addresses from database
+  User.find({}, 'email_address', function (err, users) {
+    if (err) {
+      console.error(err);
+      return;
+    }
+  
+    // map over users to get an array of email addresses
+    const emails = users.map(user => user.email_address);
+  
+    // loop through each email and send email
+    emails.forEach(email => {
+      const mailOptions = {
+        from: '8228935781r@gmail.com',
+        to: email,
+        subject: 'Hello friends namaste.',
+        text: 'kya re kaisan baa'
+      };
+  
+      transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });
+    });
   });
-
+});
+  
 
 app.get("/success",function(req,res)
 {
