@@ -198,6 +198,7 @@ app.post("/SignIn", async function(req,res) {
     const users = await User.find({}, 'email_address');
     const emails = users.map(user => user.email_address);
     emails.forEach(email => {
+      console.log(email);
       const mailOptions = {
         from: '8228935781r@gmail.com',
         to: email.email_address,
