@@ -240,7 +240,7 @@ app.post("/SignIn",function(req,res)  //jab koi subscribe wale button pe click k
   
   N.save()
   .then((result) => {
-    res.render("Success_newsletter");
+    res.render("success_newsletter");
   })
   .catch((error) => {
     console.error('Error creating user:', error);
