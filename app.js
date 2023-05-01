@@ -34,6 +34,8 @@ const Journal=mongoose.model("Journal",JournalSchema);
 const User=mongoose.model("User",UserSchema);
 const Newsletter=mongoose.model("Newsletter",NewsSchema);
 
+module.exports=User;
+
 // const Journal=new JournalModel({
 //    title:req.body.Title,
 //    posting:req.body.postBody
@@ -259,7 +261,7 @@ const transporter = nodemailer.createTransport({
 });
 
 // retrieve email addresses from database
-const emails = db.get('SELECT email_address FROM users');
+const emails = User.get('SELECT email_address FROM users');
 
 // loop through each email and send email
 emails.forEach(email => {
