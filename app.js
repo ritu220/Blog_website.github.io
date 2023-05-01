@@ -253,35 +253,23 @@ app.post("/LogIn",function(req,res)
     var firstName=req.body.fname;
     var LastName=req.body.lname;
     
-    User.findOne({email_address:firstName},function(err,foundUser)
-    {
-         if(err)
-         {
-          console.log(err);
-         }
-         else
-         {
-          if(foundUser)
-        {
-          if(foundUser.password===LastName)
-          {
-            res.render("success_login");
-          }
-        }
-         }
-        
-    });
-    // console.log(firstName);
-    // console.log(LastName);
+   
+User.findOne({ email_address: firstName})
+.then((user) => {
+  if (!user) {
+    return res.status(404).json({ message: 'User not found' });
+  }
+  if (user.password !== req.body.password) {
+    return res.status(401).json({ message: 'Incorrect password' });
+  }
+  return res.status(200).json({ message: 'Login successful', user: user });
+})
+.catch((err) => {
+  return res.status(500).json({ message: err.message });
 });
 
-
-// app.post('/LogIn', async (req, res) => {
-//   const email=req.body.fname;
-//   const password= req.body.lname;
-
-  
-// });
+   
+});
 
 
 app.get("/SignInOriginal",function(req,res)
