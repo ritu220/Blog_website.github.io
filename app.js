@@ -326,7 +326,7 @@ app.post("/SignIn",function(req,res)  //jab koi subscribe wale button pe click k
       emails.forEach(email => {
         const mailOptions = {
           from: '8228935781r@gmail.com',
-          to: email,
+          to: email.email_address,
           subject: 'Hello friends namaste.',
           text: 'kya re kaisan baa'
         };
