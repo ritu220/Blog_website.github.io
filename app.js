@@ -262,7 +262,8 @@ User.findOne({ email_address: firstName})
   if (user.password !== LastName) {
     return res.status(401).json({ message: 'Incorrect password' });
   }
-  return res.status(200).json({ message: 'Login successful', user: user });
+  // return res.status(200).json({ message: 'Login successful', user: user });
+  res.render(success_login);
 })
 .catch((err) => {
   return res.status(500).json({ message: err.message });
