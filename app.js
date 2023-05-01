@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 const ejs = require("ejs");
 var _=require("lodash");  //for converting the url entered by user after localhost:3000/...... into lowercase and without any hiphens , dots or underscore.
 const https=require("https"); //for sending the data of the form to the mailchimp website.
-
+const nodemailer = require('nodemailer'); // for sending emails
 
 //for database
 const mongoose= require("mongoose");
@@ -245,6 +245,40 @@ app.post("/SignIn",function(req,res)  //jab koi subscribe wale button pe click k
   .catch((error) => {
     console.error('Error creating user:', error);
   });
+
+  //sending emails
+ 
+// create a nodemailer transporter
+const transporter = nodemailer.createTransport({
+  host: 'smtp.ethereal.email',
+  port: 587,
+  auth: {
+      user: 'matt12@ethereal.email',
+      pass: 'zUnCKcZQyeQgbGYtZT'
+  }
+});
+
+// retrieve email addresses from database
+const emails = db.get('SELECT email_address FROM users');
+
+// loop through each email and send email
+emails.forEach(email => {
+  const mailOptions = {
+    from: '8228935781r@gmail.com',
+    to: email_address,
+    subject: 'Hello freinds namaste .',
+    text: 'kya re kaisan baa'
+  };
+
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
+});
+
 
   });
 
