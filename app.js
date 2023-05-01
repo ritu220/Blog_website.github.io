@@ -171,181 +171,53 @@ app.get("/signIn",function(req,res)
 }); 
 
 
-app.post("/SignIn",function(req,res)  //jab koi subscribe wale button pe click karega in SignIn page tabhi ye is section mai aaega.
-{
-    const firstName=req.body.fname;
-    const LastName=req.body.lname;
-    const Email=req.body.email;
-    const Password=req.body.pname;
+app.post("/SignIn", async function(req,res) {
+  const firstName = req.body.fname;
+  const lastName = req.body.lname;
+  const email = req.body.email;
+  const password = req.body.pname;
 
-  //   //--------------- using mailchimp for making subscribers list--------------------------
-    
-  //   // members , email_address .... yesab predified tha documentation section mai list/audience mai in mailchimp website.
-  //   const data={
-  //     members:[
-  //       {
-  //         email_address:Email,
-  //         status:"Subscribed",
-  //         merge_fields:{
-  //           FNAME: firstName,
-  //           LNAME: LastName
-  //         }
-  //       }
-        
-  //     ]
-  //   }
-    
-  //   //data ko json k format mai convert kar rhe hai.
-  //   const JSONDATA=JSON.stringify(data);
-
-  //   //form ka data mil gya hai ab isko mailchimp mai bhejna hai.
-    
-  //   //lists/audience k documentation mai jaa k ...../lists tak ka diya hua tha aage last mai list_id agaye hai.
-  //   const url="https://us21.api.mailchimp.com/3.0/lists/7dc8c2a91b/members";
-
-  //   const options={
-  //     method:"POST",
-  //     auth:"Ritu:7f5b86c00ba71deabf12aee3022977a7-us21" ,  //ye api key hai.  us21 us21 dono jagha same hina chahiye.
-  //     headers: {
-  //       "Content-Type": "application/json"
-  //     }  
-  //   };
-    
-
-  //   const request = https.request(url, options, function(response) {
-  //     if (response.statusCode === 200) {
-  //         res.redirect("/success");
-  //     } else {
-  //         res.redirect("/failure");
-  //     }
-  
-  //     response.on("data", function(data) {
-  //         console.log(JSON.parse(data));
-  //     });
-  // });
-  
-  // request.on("error", function(error) {
-  //     console.error(error);
-  // });
-  
-  // request.write(JSONDATA);
-  // request.end();
-  
-  ////-----------------------------------------------------------------------------------------------------
-
-  //--------without using mailchimp---------
-  // //------------------------old version-----------------------
-  // const N = new Newsletter({
-  //   email_address: Email,
-  //   password: Password
-  // });
-  
-  // N.save()
-  //   .then((result) => {
-  //     res.render("success_newsletter");
-  //   })
-  //   .catch((error) => {
-  //     console.error('Error creating user:', error);
-  //   });
-  
-  // //sending emails
-  
-  // // create a nodemailer transporter
-  // const transporter = nodemailer.createTransport({
-  //   host: 'smtp.ethereal.email',
-  //   port: 587,
-  //   auth: {
-  //       user: 'matt12@ethereal.email',
-  //       pass: 'zUnCKcZQyeQgbGYtZT'
-  //   }
-  // });
-  
-  // // retrieve email addresses from database
-  // User.find({}, 'email_address', function (err, users) {
-  //   if (err) {
-  //     console.error(err);
-  //     return;
-  //   }
-  
-  //   // map over users to get an array of email addresses
-  //   const emails = users.map(user => user.email_address);
-  
-  //   // loop through each email and send email
-  //   emails.forEach(email => {
-  //     const mailOptions = {
-  //       from: '8228935781r@gmail.com',
-  //       to: email,
-  //       subject: 'Hello friends namaste.',
-  //       text: 'kya re kaisan baa'
-  //     };
-  
-  //     transporter.sendMail(mailOptions, function(error, info){
-  //       if (error) {
-  //         console.log(error);
-  //       } else {
-  //         console.log('Email sent: ' + info.response);
-  //       }
-  //     });
-  //   });
-  // });
-  // // ---------------------------------------------------------------
-
-  //-----------new version----------------
-  const N = new Newsletter({
-    email_address: Email,
-    password: Password
-  });
-  
-  N.save()
-    .then((result) => {
-      res.render("success_newsletter");
-    })
-    .catch((error) => {
-      console.error('Error creating user:', error);
+  try {
+    // save the new subscriber
+    const N = new Newsletter({
+      email_address: email,
+      password: password
     });
-  
-  //sending emails
-  
-  // create a nodemailer transporter
-  const transporter = nodemailer.createTransport({
-    host: 'smtp.ethereal.email',
-    port: 587,
-    auth: {
-        user: 'matt12@ethereal.email',
-        pass: 'zUnCKcZQyeQgbGYtZT'
-    }
-  });
-  
-  // retrieve email addresses from database
-  User.find({}, 'email_address')
-    .then(users => {
-      // map over users to get an array of email addresses
-      const emails = users.map(user => user.email_address);
-  
-      // loop through each email and send email
-      emails.forEach(email => {
-        const mailOptions = {
-          from: '8228935781r@gmail.com',
-          to: email.email_address,
-          subject: 'Hello friends namaste.',
-          text: 'kya re kaisan baa'
-        };
-  
-        transporter.sendMail(mailOptions, function(error, info){
-          if (error) {
-            console.log(error);
-          } else {
-            console.log('Email sent: ' + info.response);
-          }
-        });
+    await N.save();
+    res.render("success_newsletter");
+
+    // send newsletter to all subscribers
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.ethereal.email',
+      port: 587,
+      auth: {
+          user: 'matt12@ethereal.email',
+          pass: 'zUnCKcZQyeQgbGYtZT'
+      }
+    });
+    const users = await User.find({}, 'email_address');
+    const emails = users.map(user => user.email_address);
+    emails.forEach(email => {
+      const mailOptions = {
+        from: '8228935781r@gmail.com',
+        to: email,
+        subject: 'Hello friends namaste.',
+        text: 'kya re kaisan baa'
+      };
+
+      transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
       });
-    })
-    .catch(error => {
-      console.error('Error retrieving users:', error);
     });
- 
-    //---------------------------------------------------------------
+  } catch (error) {
+    console.error('Error:', error);
+  }
 });
+
   
 
 app.get("/success",function(req,res)
