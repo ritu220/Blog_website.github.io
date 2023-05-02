@@ -195,13 +195,13 @@ app.post("/SignIn", async function(req,res) {
           pass: 'zUnCKcZQyeQgbGYtZT'
       }
     });
-    const users = await User.find({}, 'email_address');
-    const emails = users.map(user => user.email_address);
-    emails.forEach(email => {
-      console.log(email);
+    // const users = await User.find({}, 'email_address');
+    // const emails = users.map(user => user.email_address);
+    // emails.forEach(email => {
+    //   console.log(email);
       const mailOptions = {
         from: '8228935781r@gmail.com',
-        to: email,
+        to: N.email_address,
         subject: 'Hello friends namaste.',
         text: 'kya re kaisan baa'
       };
@@ -212,7 +212,7 @@ app.post("/SignIn", async function(req,res) {
         } else {
           console.log('Email sent: ' + info.response);
         }
-      });
+      
     });
   } catch (error) {
     console.error('Error:', error);
