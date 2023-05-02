@@ -184,7 +184,6 @@ app.post("/SignIn", async function(req,res) {
       password: password
     });
     await N.save();
-    res.render("success_newsletter");
 
     // send newsletter to all subscribers
     const transporter = nodemailer.createTransport({
@@ -202,8 +201,8 @@ app.post("/SignIn", async function(req,res) {
       const mailOptions = {
         from: '8228935781r@gmail.com',
         to: N.email_address,
-        subject: 'Hello friends namaste.',
-        text: 'kya re kaisan baa'
+        subject: "Hello friends namaste.",
+        text: "kya re kaisan baa"
       };
 
       transporter.sendMail(mailOptions, function(error, info){
@@ -211,6 +210,7 @@ app.post("/SignIn", async function(req,res) {
           console.log(error);
         } else {
           console.log('Email sent: ' + info.response);
+          res.render("success_newsletter");
         }
       
     });
