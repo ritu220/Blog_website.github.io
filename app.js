@@ -201,7 +201,7 @@ app.post("/SignIn", async function(req,res) {
       console.log(email);
       const mailOptions = {
         from: '8228935781r@gmail.com',
-        to: email.email_address,
+        to: email,
         subject: 'Hello friends namaste.',
         text: 'kya re kaisan baa'
       };
